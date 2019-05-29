@@ -1,0 +1,52 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "seed": "node seedDatabase.js",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb": "^17.1.0",
+    "eslint-config-prettier": "^4.3.0",
+    "faker": "^4.1.0",
+    "prettier": "^1.17.1"
+  },
+  "prettier": {
+    "bracketSpacing": false,
+    "parser": "babylon",
+    "printWidth": 120,
+    "semi": false,
+    "singleQuote": true,
+    "tabWidth": 4,
+    "trailingComma": "none",
+    "useTabs": false
+  },
+  "eslintConfig": {
+    "extends": [
+      "airbnb",
+      "prettier"
+    ],
+    "env": {
+      "es6": true,
+      "node": true
+    }
+  },
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "compression": "^1.7.4",
+    "cors": "^2.8.5",
+    "cors-helper": "^1.0.0",
+    "express": "^4.17.1",
+    "helmet": "^3.18.0",
+    "mongoose": "^5.5.11",
+    "morgan": "^1.9.1",
+    "uuid": "^3.3.2"
+  }
+}

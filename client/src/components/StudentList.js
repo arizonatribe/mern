@@ -1,6 +1,7 @@
-import React, { useState, useEffect } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import styled from 'styled-components';
 import IconButton from './IconButton';
+import AddEditModal from './AddEditModal';
 import api from '../api';
 
 const Table = styled.table`
@@ -39,46 +40,72 @@ const Table = styled.table`
 
 function StudentList() {
   const [students, setStudents] = useState([]);
+  const [deleteId, setDeleteId] = useState('');
+  const [editStudent, toggleEditStudent] = useState({});
+
+  async function fetchStudents() {
+    const { data } = await api.get('/students');
+    setStudents(data.students || []);
+  }
 
   useEffect(() => {
-    async function getData() {
-      const { data } = await api.get('/students');
-      setStudents(data.students || []);
-    }
-    getData();
+    fetchStudents();
   }, [students]);
 
+  useEffect(() => {
+    async function deleteStudent() {
+      const { data } = await api.delete(`/students/${deleteId}`);
+      console.log(data);
+      await fetchStudents();
+    }
+    if (deleteId) {
+      deleteStudent();
+      setDeleteId('');
+    }
+  }, [deleteId]);
+
+  function handleEditToggle(s) {
+    if (s._id === editStudent.id) {
+      toggleEditStudent({});
+    } else {
+      console.log(editStudent);
+      toggleEditStudent({ id: s._id, name: s.name, email: s.email });
+    }
+  }
+
   return (
-    <Table>
-      <thead>
-        <tr>
-          <th>Name</th>
-          <th>Email</th>
-          <th>Actions</th>
-        </tr>
-      </thead>
-      <tbody>
-        {students.map(s =>
-          <tr key={s._id}>
-            <td>{s.name}</td>
-            <td>
-              <a
-                className="App-link"
-                href={`mailto:${s.email}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                {s.email}
-              </a>
-            </td>
-            <td>
-              <IconButton iconName="edit" />
-              <IconButton iconName="trash" />
-            </td>
+    <Fragment>
+      {editStudent._id && <AddEditModal {...editStudent} />}
+      <Table>
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Actions</th>
           </tr>
-        )}
-      </tbody>
-    </Table>
+        </thead>
+        <tbody>
+          {students.map(s =>
+            <tr key={s._id}>
+              <td>{s.name}</td>
+              <td>
+                <a
+                  href={`mailto:${s.email}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  {s.email}
+                </a>
+              </td>
+              <td>
+                <IconButton iconName="edit" onClick={() => handleEditToggle(s)} />
+                <IconButton iconName="trash" onClick={() => setDeleteId(s._id)} />
+              </td>
+            </tr>
+          )}
+        </tbody>
+      </Table>
+    </Fragment>
   );
 }
 

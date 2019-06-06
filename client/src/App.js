@@ -1,21 +1,24 @@
-import React from 'react';
+import React, { Fragment } from 'react';
 import styled from 'styled-components';
 import Header from './components/Header';
 import StudentList from './components/StudentList';
+import Logo from './components/Logo';
 
 const Main = styled.main`
-  display: grid;
+  display: block;
   text-align: center;
-  justify-content: center;
-  background-color: #282c34;
+  background-color: white;
 `;
 
 function App() {
   return (
-    <Main>
+    <Fragment>
       <Header />
-      <StudentList />
-    </Main>
+      <Main>
+        <Logo />
+        <StudentList />
+      </Main>
+    </Fragment>
   );
 }
 

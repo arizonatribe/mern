@@ -1,20 +1,34 @@
 import React from 'react';
 import styled from 'styled-components';
-import Logo from './Logo';
+import ruddy from './ruddy.jpg';
 
 const AppHeader = styled.header`
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  color: white;
-  background-color: #282c34;
+  display: grid;
+  width: 100%;
+  grid-template-columns: auto 1fr;
+  justify-items: center;
+  align-items: flex-start;
+  align-content: flex-end;
+  background: white;
+  height: 117px;
+  padding: 10px
+
+  & h1 {
+    font-face: Helvetica;
+    color: gray;
+  }
+`;
+
+const HeaderLogo = styled.img`
+  display: block;
+  height: 101px
 `;
 
 function Header(props) {
   return (
     <AppHeader {...props}>
-      <Logo />
+      <HeaderLogo src={ruddy} alt="ruddy duck" />
+      <h1>Some Arizona University Student Contact List (demo)</h1>
     </AppHeader>
   );
 }

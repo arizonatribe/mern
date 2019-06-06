@@ -7,9 +7,10 @@ const Button = styled.button`
   display: block;
   outline: none;
   cursor: pointer;
-  background-color: #282c34;
+  padding: 0.4em 0.2em;
+  background-color: #3c4d55;
   border: none;
-  border-radius: 3px;
+  border-radius: 5px;
 
   & svg {
     fill: lightblue;
@@ -21,7 +22,7 @@ function IconButton({ iconName, ...restOfProps }) {
 
   return (
     <Button type="button" {...restOfProps}>
-      <svg viewBox={viewBox} width={width} height={height}>
+      <svg viewBox={viewBox} width={restOfProps.width || width} height={restOfProps.height || height}>
         <g>{paths.map(p => <path key={uuid()} d={p} />)}</g>
       </svg>
     </Button>

@@ -1,6 +1,8 @@
 import React from 'react';
-import logo from './logo.svg';
 import styled, { keyframes } from 'styled-components';
+import Backdrop from './Backdrop';
+import canyonlands from './canyonlands.jpg';
+import logo from './logo.svg';
 
 const spinner = keyframes`
   from {
@@ -16,10 +18,15 @@ const AppLogo = styled.img`
   animation: ${spinner} infinite 20s linear;
   height: 40vmin;
   pointer-events: none;
+  back
 `;
 
 function Logo() {
-  return <AppLogo src={logo} alt="logo" />
+  return (
+    <Backdrop src={canyonlands} height="500px" >
+      <AppLogo src={logo} alt="logo" />
+    </Backdrop>
+  );
 }
 
 export default Logo;

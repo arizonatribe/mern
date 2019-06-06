@@ -1,0 +1,28 @@
+version: "3.7"
+services:
+  mern-server:
+    image: mern-server:latest
+    container_name: mern-server
+    build:
+      context: ./server
+      dockerfile: ./docker/Dockerfile
+    env_file:
+      - ./server/.env
+    volumes:
+      - db-data:/data/db
+    ports:
+      - "5000:5000"
+
+  mern-client:
+    image: mern-client:latest
+    container_name: mern-client
+    depends_on:
+      - mern-server
+    build:
+      context: ./client
+      dockerfile: ./docker/Dockerfile
+    ports:
+      - "3000:3000"
+
+volumes:
+  db-data:

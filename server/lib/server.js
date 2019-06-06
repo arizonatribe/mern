@@ -7,18 +7,23 @@ const helmet = require('helmet');
 const mongoose = require('mongoose');
 const morgan = require('morgan');
 
-const { port, connectionString, env } = require('./config');
+const config = require('./config');
 const createRoutes = require('./routes');
 const { allowCrossDomain } = require('./middleware');
-const corsOptions = createWhitelistMiddleware([ 'localhost', 'locahost:3000' ]);
+const corsOptions = createWhitelistMiddleware([
+  'http://localhost',
+  'http://locahost:3000'
+]);
+
+const { port, isProduction, connectionString } = config;
 
 express()
-  .use(allowCrossDomain(env))
   .use(bodyParser.urlencoded({ extended: false }))
   .use(bodyParser.json())
-  .use('/api', createRoutes(connectionString))
-  // .use(cors(corsOptions))
+  .use(morgan(isProduction ? 'tiny' : 'dev'))
+  .options('*', cors(corsOptions))
+  .use(allowCrossDomain())
   .use(compression())
-  .use(morgan(env))
   .use(helmet())
+  .use('/api', createRoutes(connectionString))
   .listen(port, '0.0.0.0', () => console.log(`server is now listening on port ${port}`));

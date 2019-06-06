@@ -29,6 +29,9 @@ const Form = styled.form`
   grid-row-gap: 0.3em;
   align-content: center;
   text-align: left;
+  background: white;
+  border: 2px solid lightgray;
+  padding: 0.9em;
 
   & label {
     display: block;
@@ -39,16 +42,17 @@ const Form = styled.form`
   & input[type=text],
   & input[type=email] {
     display: block;
-    border-radius: 5px;
     border: 1px solid darkgray;
     color: darkgray;
     padding: 1em 0.5em;
+    &:focus {
+      outline: none;
+    }
   }
 
   & button {
-    color: lightblue;
-    background-color: #282c34;
-    border-radius: 3px;
+    color: white;
+    background-color: #5a8e75;
     align-self: center;
     border: none;
     outline: none;
@@ -104,10 +108,11 @@ function StudentForm({ id, name, email }) {
 
   return (
     <Form onSubmit={handleSave}>
+      <input type="hidden" name="id" value={id} />
       <label htmlFor="student-name">Name</label>
-      <input id="student-name" onChange={handleChange} type="text" name="name" value="" />
+      <input id="student-name" onChange={handleChange} type="text" name="name" value={student.name} />
       <label htmlFor="student-email">Email</label>
-      <input id="student-email" onChange={handleChange} type="text" name="email" value="" />
+      <input id="student-email" onChange={handleChange} type="text" name="email" value={student.email} />
       <button disabled={currentFormState === 'pending'}>Save</button>
     </Form>
   )

@@ -87,14 +87,13 @@ function StudentList() {
     if (s._id === editStudent.id) {
       toggleEditStudent({});
     } else {
-      console.log(editStudent);
       toggleEditStudent({ id: s._id, name: s.name, email: s.email });
     }
   }
 
   return (
     <Fragment>
-      {editStudent._id && <AddEditModal {...editStudent} />}
+      {editStudent.id && <AddEditModal {...editStudent} />}
       <Table>
         <TableHeader cols={3}>
           <SortAndPageButton onClick={() => handleSort('name')}>
